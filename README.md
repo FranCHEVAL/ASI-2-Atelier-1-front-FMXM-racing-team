@@ -22,3 +22,7 @@ Question 1 :
 |              | - Architecture prête à l'emploi    | Lourd et plus adapté aux grandes applications    |
 |              | - Développement rapide             | Limité en termes de flexibilité                  |
 |              | - Excellente documentation         |                                                  |
+
+
+Lien vers le projet Figma pour le découpage en composant :
+https://www.figma.com/file/PTQAbAhk5O0ulgSMizlRWS/ProjectASI2-FMXM-Racing-Team?type=design&node-id=101%3A2&mode=design&t=ttQaJEswKdyn0pYE-1
