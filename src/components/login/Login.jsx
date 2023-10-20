@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
 
-export default function Login() {
+export function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -78,14 +78,11 @@ export default function Login() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+            <Grid container   
+            justifyContent="center"
+            alignItems="center">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="http://localhost:3000/add-user" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -96,3 +93,5 @@ export default function Login() {
     </ThemeProvider>
   );
 }
+
+export default Login;

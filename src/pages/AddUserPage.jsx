@@ -14,7 +14,7 @@ import Copyright from '../components/Copyright';
 
 const defaultTheme = createTheme();
 
-export function UserAddPages(props) {
+export function AddUserPage(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -111,4 +111,4 @@ export function UserAddPages(props) {
   );
 }
 
-export default UserAddPages;
+export default AddUserPage;

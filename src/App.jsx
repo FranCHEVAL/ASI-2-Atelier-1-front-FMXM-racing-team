@@ -1,15 +1,16 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import UserAddPages from './pages/UserAddPages';
-import Copyright from './components/Copyright';
+import AddUserPage from './pages/AddUserPage';
+import Login from './components/login/Login';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={Copyright} />
-          <Route path="/user-add/" element={<UserAddPages />} />  
+          <Route path="/" element={<Login/>}></Route>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/add-user" element={<AddUserPage />} />  
         </Routes>
       </BrowserRouter>
     </div>
