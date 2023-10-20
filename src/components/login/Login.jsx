@@ -12,24 +12,36 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export function Login() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const user = data.get("user");
     console.log({
-      email: data.get('email'),
+      user: data.get('user'),
       password: data.get('password'),
     });
+    localStorage.setItem('user', user);
+    // try {
+    //     const response = await fetch("TODO");
+    //     if (!response.ok) {
+    //         throw new Error("La réponse n'est pas OK");
+    //     }
+    //     localStorage.setItem('user', user); //localStorage.getItem("user");
+    //     const data = await response.json();
+    // } catch (error) {
+    //     console.error("Un problème est survenu lors de la récupération :", error);
+    // }
+      // store the user in localStorage
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs">    
         <CssBaseline />
         <Box
           sx={{
@@ -50,10 +62,10 @@ export function Login() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="user"
+              label="Username"
+              name="user"
+              autoComplete="user"
               autoFocus
             />
             <TextField
