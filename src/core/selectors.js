@@ -1,0 +1,1 @@
+export const isAuthenticate = (state) => state.authReducer.isAuthenticate;
