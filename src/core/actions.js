@@ -10,7 +10,12 @@ export const userDisconnection = () => ({
 })
 
 export const loadCards = (cards) => ({
-type: 'LOAD_CARDS',
-payload: cards,
+    type: 'LOAD_CARDS',
+    payload: cards,
 });
+
+export const selectCardDetail = (card) => ({
+  type: 'LOAD_CARD_DETAIL',
+  payload: card
+})
   

@@ -8,6 +8,7 @@ import NavigationBar from './components/common/NavigationBar';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { isConnected } from './core/selectors';
 
+import ShopContainer from './components/shop/ShopContainer';
 
 function App() {
   const isAuthenticated = useSelector(isConnected)
@@ -25,6 +26,7 @@ function App() {
           <Route path="/welcome-page" element={
             <ProtectedRoute>
               <WelcomePage />
+              <Route path="/sell" element={<ShopContainer/>} />
             </ProtectedRoute>
           } /> 
         </Routes>

@@ -1,13 +1,13 @@
 const initialState = {
-    cards: [],
+    card: null,
   };
   
-export const cardsReducer = (state = initialState, action) => {
+export const cardDetailReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'LOAD_CARDS':
+        case 'LOAD_CARD_DETAIL':
             return {
                 ...state,
-                cards: action.payload,
+                card: action.payload,
             };
         default:
             return state;

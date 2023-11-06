@@ -1,50 +1,43 @@
 
 import { DataGrid } from '@mui/x-data-grid';
+import { useDispatch } from 'react-redux';
+import { selectCardDetail } from "../../core/actions";
+
 //see https://mui.com/x/react-data-grid/
 
 const columns = [
-  { field: 'Name', headerName: 'ID', width: 130 },
-  { field: 'Description', headerName: 'Description', width: 200 },
-  { field: 'Family', headerName: 'Family', width: 130 },
+  { field: 'name', headerName: 'Name', width: 130 },
+  { field: 'description', headerName: 'Description', width: 200 },
+  { field: 'family', headerName: 'Family', width: 130 },
+  { field: 'energy', headerName: 'Energy', width: 130 },
   {
-    field: 'age',
-    headerName: 'Age',
+    field: 'affinity',
+    headerName: 'Affinity',
     type: 'number',
     width: 90,
   },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
+  { field: 'hp', headerName: 'hp', width: 130 },
+  { field: 'price', headerName: 'Price', width: 130 },
+
+  
 ];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+const CardTable = (props) => {
+    const rows = props.cards;
+    const dispatch = useDispatch();
 
-const CardTable = () => {
- 
+    const handleRowClick = (params) => {
+        dispatch(selectCardDetail(params.row));
+      };
 
     return (
-      <div style={{ height: 400, width: '100%' }}>
+      <div style={{ height: 400, width: '60%' }}>
       <DataGrid
+        onRowClick={handleRowClick} 
         rows={rows}
         columns={columns}
         initialState={{
-          pagination: {
+          pagination: { 
             paginationModel: { page: 0, pageSize: 5 },
           },
         }}
