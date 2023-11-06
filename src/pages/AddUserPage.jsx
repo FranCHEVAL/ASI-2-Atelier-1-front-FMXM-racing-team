@@ -19,11 +19,37 @@ export function AddUserPage(props) {
 
   const navigate = useNavigate()
 
+  // TO DO : Puth this function in a separate file which handle request
+  async function addUserRequest(data) {
+    try {
+      const response = await fetch("http://tp.cpe.fr:8083/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // TO DO : add redirection to user add function from backend
-    console.log(data)
+    const newUser = {
+      login:data.get('login'),
+      pwd:data.get('password'),
+      lastName:data.get('lastName'),
+      surName:data.get('firstName'),
+      email:data.get('email')
+    }
+
+    addUserRequest(newUser);
+
     navigate('/login')
   };
 
@@ -47,6 +73,16 @@ export function AddUserPage(props) {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="login"
+                  label="Login"
+                  id="login"
+                  autoComplete="username"
+                />
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
@@ -66,6 +102,17 @@ export function AddUserPage(props) {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="email"
+                  label="Email"
+                  type="email"
+                  id="email"
+                  autoComplete="email"
                 />
               </Grid>
               <Grid item xs={12}>

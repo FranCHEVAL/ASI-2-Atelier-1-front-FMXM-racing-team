@@ -3,12 +3,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddUserPage from './pages/AddUserPage';
 import Login from './components/login/Login';
 import { WelcomePage } from './pages/WelcomePage';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
-import { isAuthenticate } from './core/selectors';
+import { ProtectedRoute } from './components/route/ProtectedRoute';
 import NavigationBar from './components/common/NavigationBar';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { isConnected } from './core/selectors';
+
 
 function App() {
-  const isAuthenticated = useSelector(isAuthenticate)
+  const isAuthenticated = useSelector(isConnected)
+
   return (
     <div className="App">
       {isAuthenticated &&
@@ -17,9 +20,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login/>}></Route>
-          <Route path="/login" element={<Login/>}/>
+          <Route path="/login" element={<Login/>} />
           <Route path="/add-user" element={<AddUserPage />} />  
-          <Route path="/welcome-page" element={<WelcomePage />} /> 
+          <Route path="/welcome-page" element={
+            <ProtectedRoute>
+              <WelcomePage />
+            </ProtectedRoute>
+          } /> 
         </Routes>
       </BrowserRouter>
     </div>
