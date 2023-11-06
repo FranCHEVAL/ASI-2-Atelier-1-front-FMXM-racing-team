@@ -8,3 +8,9 @@ export const userDisconnection = () => ({
   type: 'USER_DISCONNECTION',
   payload: null
 })
+
+export const loadCards = (cards) => ({
+type: 'LOAD_CARDS',
+payload: cards,
+});
+  
