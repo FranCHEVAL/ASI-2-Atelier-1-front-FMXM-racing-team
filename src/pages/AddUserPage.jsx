@@ -9,21 +9,24 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Copyright from '../components/Copyright';
+import Copyright from '../components/common/Copyright';
+import { useNavigate } from 'react-router-dom';
 
 
 const defaultTheme = createTheme();
 
 export function AddUserPage(props) {
 
+  const navigate = useNavigate()
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // TO DO : add redirection to user add function from backend
     console.log(data)
+    navigate('/login')
   };
 
-  // TO DO : Add redirection to login page
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
