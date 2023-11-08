@@ -26,9 +26,13 @@ function App() {
           <Route path="/welcome-page" element={
             <ProtectedRoute>
               <WelcomePage />
-              <Route path="/sell" element={<ShopContainer/>} />
             </ProtectedRoute>
           } /> 
+          <Route path="/sell" element={
+            <ProtectedRoute>
+              <ShopContainer mode="sell"/>
+            </ProtectedRoute>
+            } />
         </Routes>
       </BrowserRouter>
     </div>

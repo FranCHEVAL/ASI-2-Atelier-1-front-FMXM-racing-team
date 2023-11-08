@@ -42,7 +42,6 @@ const CardTable = (props) => {
           },
         }}
         pageSizeOptions={[5, 10]}
-        checkboxSelection
       />
     </div>
     );
