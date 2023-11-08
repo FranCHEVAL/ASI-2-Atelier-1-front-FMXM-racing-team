@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,26 +10,49 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { setAuthenticated } from '../../core/actions';
+import { userAuthentication } from '../core/actions';
 import { useNavigate} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const defaultTheme = createTheme();
 
 export function Login(props) {
-
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleSubmit = (event) => {
+  //TO DO : Put this function in a dedicated file 
+  async function authenticationRequest(data) {
+    try {
+      const response = await fetch("http://tp.cpe.fr:8083/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      const result = await response.json();
+      return result
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  async function handleSubmit(event){
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    console.log({
-      email: data.get('email'),
+    const user ={
+      username: data.get('username'),
       password: data.get('password'),
-    });
+    };
 
-    setAuthenticated(true);
-    navigate('/welcome-page')
+    const userId = await authenticationRequest(user)
+    dispatch(userAuthentication(userId));
+
+    if(userId != null){
+      navigate('/welcome-page')
+    }
   };
 
   return (
@@ -57,10 +78,10 @@ export function Login(props) {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
@@ -72,10 +93,6 @@ export function Login(props) {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"

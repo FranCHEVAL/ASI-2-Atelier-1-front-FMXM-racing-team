@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { setAuthenticated } from './auth.reducer';
+import { authReducer } from './auth.reducer';
 
 const globalReducer = combineReducers({
-  authReducer: setAuthenticated
+  authReducer: authReducer
 });
 
 export default globalReducer;

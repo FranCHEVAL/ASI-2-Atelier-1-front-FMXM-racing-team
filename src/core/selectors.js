@@ -1,1 +1,3 @@
-export const isAuthenticate = (state) => state.authReducer.isAuthenticate;
+export const isConnected = (state) => {
+    return state.authReducer.currentUserId != null
+};
