@@ -19,7 +19,7 @@ const ShopContainer = (props) => {
     const card_id = storedCardDetail?.id;
     const user_id = storedIdUser;
     if(props.mode ==="sell"){
-      const resp = await fetch("http://tp.cpe.fr:8083/store/sell", {
+      const resp = await fetch("http://localhost:8081/store/sell", {
         method: "POST",
         body: JSON.stringify({user_id: user_id, card_id: card_id}),
         headers: {
@@ -28,7 +28,7 @@ const ShopContainer = (props) => {
         },
       });
     }else{
-      const resp = await fetch("http://tp.cpe.fr:8083/store/buy", {
+      const resp = await fetch("http://localhost:8081/store/buy", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -44,13 +44,13 @@ const ShopContainer = (props) => {
       // You can await here
       if(props.mode === "sell"){
         const resp = await fetch(
-          'http://tp.cpe.fr:8083/cards_to_sell'
+          'http://localhost:8081/cards_to_sell'
         );
         const result = await resp.json();
         dispatch(loadCards(result));
       }else{
         const resp = await fetch(
-          'http://tp.cpe.fr:8083/cards'
+          'http://localhost:8081/cards'
         );
         const result = await resp.json();
         dispatch(loadCards(result));

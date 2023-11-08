@@ -22,7 +22,7 @@ export function AddUserPage(props) {
   // TO DO : Puth this function in a separate file which handle request
   async function addUserRequest(data) {
     try {
-      const response = await fetch("http://tp.cpe.fr:8083/user", {
+      const response = await fetch("http://localhost:8080/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
