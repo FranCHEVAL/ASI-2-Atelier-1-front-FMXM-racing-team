@@ -33,6 +33,11 @@ function App() {
               <ShopContainer mode="sell"/>
             </ProtectedRoute>
             } />
+          <Route path="/buy" element={
+          <ProtectedRoute>
+            <ShopContainer mode="buy"/>
+          </ProtectedRoute>
+          } /> 
         </Routes>
       </BrowserRouter>
     </div>

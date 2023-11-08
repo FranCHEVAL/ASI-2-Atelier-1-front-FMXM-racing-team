@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as React from 'react';
 import CardTable from "./CardTable";
 import { loadCards } from "../../core/actions";
-import { selectCards } from '../../core/selectors';
+import { getUserId, selectCards } from '../../core/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { CardDetail } from "./CardDetail";
 import { Col, Container, Row } from 'react-bootstrap';
@@ -13,9 +13,30 @@ const ShopContainer = (props) => {
   const dispatch = useDispatch();
   const storedCards = useSelector(selectCards);
   const storedCardDetail = useSelector(selectCardDetail);
+  const storedIdUser = useSelector(getUserId);
 
-  function handleClick(){
-    const id = storedCardDetail?.id;
+  async function handleClick(){
+    const card_id = storedCardDetail?.id;
+    const user_id = storedIdUser;
+    if(props.mode ==="sell"){
+      const resp = await fetch("http://tp.cpe.fr:8083/store/sell", {
+        method: "POST",
+        body: JSON.stringify({user_id: user_id, card_id: card_id}),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      });
+    }else{
+      const resp = await fetch("http://tp.cpe.fr:8083/store/buy", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user_id: user_id, card_id: card_id})
+      });
+    }
   }
 
   useEffect(() => {
@@ -53,7 +74,7 @@ const ShopContainer = (props) => {
             <CardDetail></CardDetail>
           </Col>
         </Row>
-        <Row><Button variant="contained" onClick={handleClick()}>{props.mode === "sell" ? "Je vends !" : "J'achete" }</Button></Row>
+        <Row><Button variant="contained" onClick={() => {handleClick()}}>{props.mode === "sell" ? "Je vends !" : "J'achete" }</Button></Row>
       </Container>
     </div>
   );
