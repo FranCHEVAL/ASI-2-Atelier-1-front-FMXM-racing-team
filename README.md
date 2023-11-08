@@ -1,4 +1,6 @@
 # Getting Started with Create React App
+tuto websocket : 
+https://medium.com/@alishgiri/websockets-socket-io-react-and-node-js-a-real-time-game-app-concept-e6e4daa4d6ae
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
