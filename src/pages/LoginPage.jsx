@@ -22,8 +22,9 @@ export function Login(props) {
 
   //TO DO : Put this function in a dedicated file 
   async function authenticationRequest(data) {
+    console.log(data)
     try {
-      const response = await fetch("http://tp.cpe.fr:8083/auth", {
+      const response = await fetch("http://localhost:8085/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
