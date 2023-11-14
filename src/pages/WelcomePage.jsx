@@ -3,8 +3,17 @@ import { ShoppingCart } from "@mui/icons-material";
 import { SportsEsports } from "@mui/icons-material";
 import { AttachMoney } from "@mui/icons-material";
 import Grid from "@mui/material/Grid";
+import { useSelector } from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 export function WelcomePage(){
+    const userId = useSelector(state => state.currentUserId);
+    const navigate = useNavigate()
+
+    console.log(userId)
+    if(userId === null){
+        navigate('/login')
+    }
     return (
         <div>
                 <Grid container spacing={2} columns={18} 

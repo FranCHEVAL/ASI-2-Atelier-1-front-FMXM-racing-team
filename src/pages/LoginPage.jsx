@@ -19,6 +19,7 @@ const defaultTheme = createTheme();
 export function Login(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const errors = useState({});
 
   //TO DO : Put this function in a dedicated file 
   async function authenticationRequest(data) {
@@ -50,10 +51,12 @@ export function Login(props) {
     };
 
     const userId = await authenticationRequest(user)
-    dispatch(userAuthentication(userId));
 
-    if(userId != null){
+    if(userId !== -1){
       navigate('/welcome-page')
+      dispatch(userAuthentication(userId));
+    } else {
+        alert("Wrong username or password")
     }
   };
 
