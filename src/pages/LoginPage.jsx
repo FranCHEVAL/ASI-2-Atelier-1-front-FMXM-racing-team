@@ -9,10 +9,10 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { userAuthentication } from '../core/actions';
-import { useNavigate} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {userAuthentication} from '../core/actions';
+import {useNavigate} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
 const defaultTheme = createTheme();
 
@@ -24,16 +24,17 @@ export function Login(props) {
   async function authenticationRequest(data) {
     console.log(data)
     try {
+
       const response = await fetch("http://localhost:8085/auth", {
-        method: "POST",
+        method: 'POST', // ou 'POST', 'PUT', etc.
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://localhost:3000'
         },
         body: JSON.stringify(data),
-      });
-  
-      const result = await response.json();
-      return result
+      })
+
+      return await response.json()
     } catch (error) {
       console.error("Error:", error);
     }
