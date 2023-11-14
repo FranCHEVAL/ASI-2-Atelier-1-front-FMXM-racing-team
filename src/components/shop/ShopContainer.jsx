@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { getCards, getCardsToSell, sellCard, buyCard } from "../../core/services/fetchService.js";
+import { loadCards } from "../../core/actions";
 import * as React from 'react';
 import CardTable from "./CardTable";
-import { loadCards } from "../../core/actions";
 import { getUserId, selectCards } from '../../core/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { CardDetail } from "./CardDetail";
@@ -19,23 +20,9 @@ const ShopContainer = (props) => {
     const card_id = storedCardDetail?.id;
     const user_id = storedIdUser;
     if(props.mode ==="sell"){
-      const resp = await fetch("http://tp.cpe.fr:8083/store/sell", {
-        method: "POST",
-        body: JSON.stringify({user_id: user_id, card_id: card_id}),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-      });
+      await sellCard(card_id, user_id);
     }else{
-      const resp = await fetch("http://tp.cpe.fr:8083/store/buy", {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({user_id: user_id, card_id: card_id})
-      });
+      await buyCard(card_id, user_id);
     }
   }
 
@@ -43,20 +30,12 @@ const ShopContainer = (props) => {
     async function fetchData() {
       // You can await here
       if(props.mode === "sell"){
-        const resp = await fetch(
-          'http://tp.cpe.fr:8083/cards_to_sell'
-        );
-        const result = await resp.json();
-        dispatch(loadCards(result));
+        const cards = await getCardsToSell();
+        dispatch(loadCards(cards));     
       }else{
-        const resp = await fetch(
-          'http://tp.cpe.fr:8083/cards'
-        );
-        const result = await resp.json();
-        dispatch(loadCards(result));
+        const cards = await getCards();      
+        dispatch(loadCards(cards));     
       }
-
-     
     }
     fetchData();
   }, [dispatch]);
