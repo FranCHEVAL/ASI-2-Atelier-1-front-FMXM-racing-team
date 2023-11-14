@@ -7,18 +7,21 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {userAuthentication} from '../core/actions';
 import {useNavigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
+import {useState} from "react";
 
 const defaultTheme = createTheme();
 
 export function Login(props) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [erreurs, setErreurs] = useState([])
 
   //TO DO : Put this function in a dedicated file 
   async function authenticationRequest(data) {
@@ -43,6 +46,7 @@ export function Login(props) {
   async function handleSubmit(event){
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    setErreurs([])
 
     const user ={
       username: data.get('username'),
@@ -55,7 +59,7 @@ export function Login(props) {
       navigate('/welcome-page')
       dispatch(userAuthentication(userId));
     } else {
-        alert("Wrong username or password")
+        setErreurs(["Username or password incorrect"])
     }
   };
 
@@ -77,6 +81,11 @@ export function Login(props) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          <div>
+            {erreurs.map((error) => (
+                <Alert severity="error">{error}</Alert>
+            ))}
+          </div>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
