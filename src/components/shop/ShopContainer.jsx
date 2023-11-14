@@ -44,7 +44,7 @@ const ShopContainer = (props) => {
       // You can await here
       if(props.mode === "sell"){
         const resp = await fetch(
-          'http://localhost:8084/cards'
+          'http://localhost:8084/cards/user_id/' + storedIdUser
         );
         const result = await resp.json();
         dispatch(loadCards(result));
