@@ -17,9 +17,8 @@ import {useDispatch} from 'react-redux';
 const defaultTheme = createTheme();
 
 export function Login(props) {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const errors = useState({});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //TO DO : Put this function in a dedicated file 
   async function authenticationRequest(data) {
