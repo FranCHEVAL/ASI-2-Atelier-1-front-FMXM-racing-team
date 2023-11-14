@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/common/Copyright';
 import { useNavigate } from 'react-router-dom';
+import {useSelector} from "react-redux";
 
 
 const defaultTheme = createTheme();
@@ -18,6 +19,12 @@ const defaultTheme = createTheme();
 export function AddUserPage(props) {
 
   const navigate = useNavigate()
+
+  const userId = useSelector(state => state.currentUserId);
+
+  if(userId === null){
+    navigate('/login')
+  }
 
   // TO DO : Puth this function in a separate file which handle request
   async function addUserRequest(data) {

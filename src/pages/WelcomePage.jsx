@@ -10,7 +10,6 @@ export function WelcomePage(){
     const userId = useSelector(state => state.currentUserId);
     const navigate = useNavigate()
 
-    console.log(userId)
     if(userId === null){
         navigate('/login')
     }

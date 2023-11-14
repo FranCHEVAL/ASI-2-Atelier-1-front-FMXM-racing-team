@@ -5,9 +5,11 @@ import { loadCards } from "../../core/actions";
 import { getUserId, selectCards } from '../../core/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { CardDetail } from "./CardDetail";
-import { Col, Container, Row } from 'react-bootstrap';
 import { Button } from '@mui/material';
 import { selectCardDetail } from '../../core/selectors';
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
 
 const ShopContainer = (props) => {
   const dispatch = useDispatch();
@@ -64,17 +66,25 @@ const ShopContainer = (props) => {
 
   return (
     <div>
-      <Container>
-        <Row><p>Liste des cartes</p></Row>
-        <Row>
-          <Col>
-            <CardTable cards={storedCards}></CardTable>
-          </Col>
-          <Col>
-            <CardDetail></CardDetail>
-          </Col>
-        </Row>
-        <Row><Button variant="contained" onClick={() => {handleClick()}}>{props.mode === "sell" ? "Je vends !" : "J'achete" }</Button></Row>
+      <Container style={{padding: '30px'}}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h6">Liste des cartes</Typography>
+          </Grid>
+          <Grid container spacing={2}> {/* Ajoutez un espacement entre les éléments si nécessaire */}
+            <Grid item xs={12} md={9}> {/* Ajustez les points de rupture selon les besoins */}
+              <CardTable cards={storedCards} />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <CardDetail storedCardDetail={storedCardDetail} />
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Button variant="contained" onClick={handleClick}>
+              {props.mode === "sell" ? "Je vends !" : "J'achete"}
+            </Button>
+          </Grid>
+        </Grid>
       </Container>
     </div>
   );

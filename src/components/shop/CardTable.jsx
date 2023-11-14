@@ -31,11 +31,12 @@ const CardTable = (props) => {
       };
 
     return (
-      <div style={{ height: 400, width: '60%' }}>
+      <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         onRowClick={handleRowClick} 
         rows={rows}
         columns={columns}
+        style={{width: '100%'}}
         initialState={{
           pagination: { 
             paginationModel: { page: 0, pageSize: 5 },

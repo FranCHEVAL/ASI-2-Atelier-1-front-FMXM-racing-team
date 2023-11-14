@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {userAuthentication} from '../core/actions';
 import {useNavigate} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useState} from "react";
 
 const defaultTheme = createTheme();
@@ -21,7 +21,12 @@ const defaultTheme = createTheme();
 export function Login(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const userId = useSelector(state => state.currentUserId);
   const [erreurs, setErreurs] = useState([])
+
+  if(userId !== null){
+    navigate('/welcome-page')
+  }
 
   //TO DO : Put this function in a dedicated file 
   async function authenticationRequest(data) {
