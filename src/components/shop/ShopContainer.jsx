@@ -44,13 +44,13 @@ const ShopContainer = (props) => {
       // You can await here
       if(props.mode === "sell"){
         const resp = await fetch(
-          'http://localhost:8081/cards_to_sell'
+          'http://localhost:8084/cards_to_sell'
         );
         const result = await resp.json();
         dispatch(loadCards(result));
       }else{
         const resp = await fetch(
-          'http://localhost:8081/cards'
+          'http://localhost:8084/cards'
         );
         const result = await resp.json();
         dispatch(loadCards(result));
