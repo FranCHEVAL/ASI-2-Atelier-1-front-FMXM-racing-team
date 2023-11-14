@@ -9,9 +9,10 @@ import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { isConnected } from './core/selectors';
 
 import ShopContainer from './components/shop/ShopContainer';
+import GamePage from './pages/GamePage';
 
 function App() {
-  const isAuthenticated = useSelector(isConnected)
+  const isAuthenticated = useSelector(isConnected);
 
   return (
     <div className="App">
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<LoginPage/>}></Route>
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/add-user" element={<AddUserPage />} />  
+          <Route path="/play" element={<GamePage></GamePage>}/>
           <Route path="/welcome-page" element={
             <ProtectedRoute>
               <WelcomePage />

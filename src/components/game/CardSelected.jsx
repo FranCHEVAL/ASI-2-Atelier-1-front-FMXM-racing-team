@@ -5,12 +5,11 @@ import { selectCardDetail } from '../../core/selectors';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
-export function CardInGame(props) {
+export function CardSelected(props) {
     const card = props.card;
-    console.log(card);
 
     return ( card != null &&
-        <Card key={card.id} style={{ width: '18rem' }}>
+        <Card key={card.id} style={{ width: '15rem'  }}>
             <CardContent>{card.hp} HP - {card.name} - {card.attack} ATK</CardContent>
             <CardContent>{card.description}</CardContent>
                 <Visual
