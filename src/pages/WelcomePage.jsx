@@ -2,6 +2,7 @@ import MenuCard from "../components/common/MenuCard";
 import { ShoppingCart } from "@mui/icons-material";
 import { SportsEsports } from "@mui/icons-material";
 import { AttachMoney } from "@mui/icons-material";
+import ChatIcon from '@mui/icons-material/Chat';
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -38,6 +39,13 @@ export function WelcomePage(){
                         text="Sell"
                         link="http://localhost:3000/sell"
                         icon={<AttachMoney />}
+                    ></MenuCard>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <MenuCard
+                        text="chat"
+                        link="http://localhost:3000/chat"
+                        icon={<ChatIcon />}
                     ></MenuCard>
                     </Grid>
                 </Grid>

@@ -1,18 +1,16 @@
 import { ChatItem } from "./ChatItem";
 import { socket } from "../../socket";
 import { useEffect } from "react";
-import { TextField, Box, Button } from "@mui/material";
+import { TextField, Box, Button, Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getChatHistory, getReceiverId} from "../../core/selectors";
+import { getChatHistory, getReceiverId, getUserId} from "../../core/selectors";
 import { loadChatHistory, updateChatHistory } from "../../core/actions";
 
 
 export function ChatContainer(props){
 
     const receiverId = useSelector(getReceiverId)
-    // TO UNCOMMENT WHEN FULLY IMPLEMENTED
-    //const userId = useSelector(getUserId)
-    const userId = 100
+    const userId = useSelector(getUserId)
     const dispatch = useDispatch()
     const chatHistory = useSelector(getChatHistory)
 
@@ -31,32 +29,37 @@ export function ChatContainer(props){
     
 
     useEffect(() => {
-        socket.on('receiveMessage',(message) => {
+        
+        function onReceiveMessage(message){
             dispatch(updateChatHistory(message))
-        });
-
-        socket.on('loadChatHistory',(chatHistory)=>{
-            console.log(chatHistory)
-            dispatch(loadChatHistory(chatHistory))
-        })
-
-        const payload={
-            sender:userId,
-            receiver:receiverId
         }
 
-        socket.emit('loadChatHistory', payload)
-    });
+        function onLoadChatHistory(chatHistory){
+            dispatch(loadChatHistory(chatHistory))
+        }
+
+        socket.on('receiveMessage',onReceiveMessage);
+
+        socket.on('loadChatHistory',onLoadChatHistory);
+
+        return () => {
+            socket.off('receiveMessage',onReceiveMessage);
+            socket.off('loadChatHistory',loadChatHistory);
+        };
+    },[dispatch]);
 
     return(
         <div>
                 {chatHistory.map(message => {
                     return(
-                    <ChatItem sender={message.sender} content={message.content} key={message.date}>
+                    <ChatItem sender={message.sender} 
+                        content={message.content} 
+                        key={message.date}
+                        isSender={userId===message.sender}>
                     </ChatItem>
                     )
                 })}
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                 <TextField
                 margin="normal"
                 required

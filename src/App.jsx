@@ -20,7 +20,6 @@ function App() {
       }
       <BrowserRouter>
         <Routes>
-          <Route path="/test" element={<Chat/>}></Route>
           <Route path="/" element={<LoginPage/>}></Route>
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/add-user" element={<AddUserPage />} />  
@@ -37,6 +36,11 @@ function App() {
           <Route path="/buy" element={
           <ProtectedRoute>
             <ShopContainer mode="buy"/>
+          </ProtectedRoute>
+          } /> 
+          <Route path="/chat" element={
+          <ProtectedRoute>
+            <Chat/>
           </ProtectedRoute>
           } /> 
         </Routes>
