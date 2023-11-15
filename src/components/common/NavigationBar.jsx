@@ -1,4 +1,3 @@
-import { AccountCircle } from '@mui/icons-material';
 import { userDisconnection } from '../../core/actions';
 import { Menu, Tooltip, Typography, MenuItem, Container, Box, Toolbar, Avatar, Button, AppBar, IconButton } from '@mui/material';
 import React, { useState } from 'react';
@@ -16,10 +15,10 @@ export function NavigationBar(props){
     const [anchorElNav, setAnchorElNav] = useState(null)
     const [anchorElUser, setAnchorElUser] = useState(null)
 
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
     };
 
@@ -63,10 +62,6 @@ export function NavigationBar(props){
     const handleCloseUserMenu = () => {
     setAnchorElUser(null);
     };
-
-    function disconnect(){
-    dispatch(userDisconnection())
-    }
 
     return (
         <Box sx={{ flexGrow: 1 }}>
