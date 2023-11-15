@@ -7,8 +7,8 @@ import { ProtectedRoute } from './components/route/ProtectedRoute';
 import NavigationBar from './components/common/NavigationBar';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { isConnected } from './core/selectors';
-
 import ShopContainer from './components/shop/ShopContainer';
+import { Chat } from './components/chat/Chat';
 
 function App() {
   const isAuthenticated = useSelector(isConnected)
@@ -20,6 +20,7 @@ function App() {
       }
       <BrowserRouter>
         <Routes>
+          <Route path="/test" element={<Chat/>}></Route>
           <Route path="/" element={<LoginPage/>}></Route>
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/add-user" element={<AddUserPage />} />  
