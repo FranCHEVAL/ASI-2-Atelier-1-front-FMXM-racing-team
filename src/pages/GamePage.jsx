@@ -27,9 +27,11 @@ const GamePage = ({route, navigate}) => {
   
   useEffect(() => {
     socket.connect();
-    const payload = { cardList, storedIdUser};
+    const payload = { cardList: cardList, name:"francheval", userId: storedIdUser};
     
-    socket.emit("findGame", payload);
+    socket.emit("findGame", cardList, "francheval", storedIdUser, (response) => {
+      console.log(response.status);
+    });
     //get CardSelected
     async function fetchData() {
       const cards = await getCards();      
