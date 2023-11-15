@@ -15,7 +15,7 @@ export function WelcomePage(){
         navigate('/login')
     }
     return (
-        <div>
+        <div style={{margin: "auto"}}>
                 <Grid container spacing={2} columns={18} 
                     alignContent="center" 
                     justifyContent="center"
