@@ -1,6 +1,4 @@
 import { Visual } from '../visual/Visual';
-import { useSelector } from 'react-redux';
-import { selectCardDetail } from '../../core/selectors';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';

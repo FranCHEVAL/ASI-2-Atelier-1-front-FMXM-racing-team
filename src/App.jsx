@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddUserPage from './pages/AddUserPage';
 import LoginPage from './pages/LoginPage';
+import StartGamePage from './pages/StartGamePage'
 import { WelcomePage } from './pages/WelcomePage';
 import { ProtectedRoute } from './components/route/ProtectedRoute';
 import NavigationBar from './components/common/NavigationBar';
@@ -24,7 +25,12 @@ function App() {
           <Route path="/" element={<LoginPage/>}></Route>
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/add-user" element={<AddUserPage />} />  
-          <Route path="/play" element={<GamePage></GamePage>}/>
+          <Route path="/game" element={<GamePage/>} />
+          <Route path="/play" element={
+            <ProtectedRoute>
+              <StartGamePage/>
+            </ProtectedRoute>
+          } /> 
           <Route path="/welcome-page" element={
             <ProtectedRoute>
               <WelcomePage />

@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react";
+import {useLocation} from 'react-router-dom';
 import * as React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 import { getCards } from "../core/services/fetchService.js";
 import { CardOnBoard } from "../components/game/CardOnBoard.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCards } from "../core/actions";
-import { selectCards } from "../core/selectors.js";
+import { selectCards, getUserId } from "../core/selectors.js";
 import { PlayerInfos } from "../components/game/PlayerInfos.jsx";
-import { Box, Button } from "@mui/material";
-import { CardSelected } from "../components/game/CardSelected.jsx";
+import { Box, Button, Grid } from "@mui/material";
+import { socket } from '../socket/socket.js';
 
-const GamePage = (props) => {
+const GamePage = ({route, navigate}) => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const cardList = location.state; // Read values passed on state
+
+  const storedIdUser = useSelector(getUserId);
+
   const [selectedCardP1, setSelectedCardP1] = useState(0);
   const [selectedCardP2, setSelectedCardP2] = useState(0);
   //store : 
 
   const storedCards = useSelector(selectCards);
-  const storedCardDetailP1 = storedCards[0];
-  const storedCardDetailP2 = storedCards[1];
-  const storedInfoUserP1 = {name:"test"};
-  const storedInfoUserP2 = {name:"test1"};
+  const storedInfoUserP1 = {name:"Nasty Nas", actionPoints:10};
+  const storedInfoUserP2 = {name:"Jay Hova", actionPoints:10};
   
   useEffect(() => {
-    //get 
+    socket.connect();
+    const payload = { cardList, storedIdUser};
+    
+    socket.emit("findGame", payload);
+    //get CardSelected
     async function fetchData() {
       const cards = await getCards();      
       dispatch(loadCards(cards));     
@@ -35,51 +42,46 @@ const GamePage = (props) => {
 
   return (
     <div>
-             
-      <Container>
-        <Row id="player1">
-          <Col id="infoPlayer">
-            <PlayerInfos playerInfos={storedInfoUserP1}></PlayerInfos>
-          </Col>
-          <Col>
-            <Box display="flex">
-              {storedCards.slice(0,4).map((c) => ( //tri sur 
-                <CardOnBoard onClick={setSelectedCardP1(c)} key={c.id} card={c}></CardOnBoard>
-                  ))
-              }
-              <CardSelected card={selectedCardP1}></CardSelected>
-
-            </Box>
-          </Col>
-          <Col>
-          </Col>
-        </Row>
-        <Row><hr /><Button>Attack !</Button></Row>
-        <Row id="player2">
-          <Col id="infoPlayer">
-              <PlayerInfos playerInfos={storedInfoUserP2}></PlayerInfos>
-          </Col>
-          <Col>
-            <Box display="flex">
-              {storedCards.slice(4,8).map((c) => ( //tri sur 
+      <Grid container spacing={2}>
+        <Grid item xs={2}>
+          <PlayerInfos playerInfos={storedInfoUserP1}></PlayerInfos>
+        </Grid>
+        <Grid item xs>
+          <Box display="flex">
+            {storedCards.slice(0,4).map((c) => ( //tri sur 
+              <div key={c.id} onClick={() => setSelectedCardP1(c)}> 
                 <CardOnBoard key={c.id} card={c}></CardOnBoard>
-                  ))
-              }
-              <div style={{MarginLeft:"10%"}} >
-                <CardSelected card={selectedCardP2}></CardSelected>
               </div>
-
+                ))
+            }
+            <div style={{marginLeft: 20, border:"1px solid red"}}>
+              <CardOnBoard card={selectedCardP1}></CardOnBoard>
+            </div>
             </Box>
-          </Col>
-          <Col>
-            
-            {/* peut etre faire le for ici */}
-            {/* <Board user={"user_id2"}></Board>  */}
-          </Col>
-          <Col>
-          </Col>     
-        </Row>
-      </Container>
+        </Grid>
+      </Grid>
+      <hr/>
+      <Button variant="contained" color="error">Attack !</Button>
+      <Button variant="contained">End Turn</Button>
+      <Grid container spacing={2}>
+        <Grid item xs={2}>
+          <PlayerInfos playerInfos={storedInfoUserP2}></PlayerInfos>
+        </Grid>
+        <Grid item xs>
+          <Box display="flex">
+            {storedCards.slice(4,8).map((c) => ( //tri sur 
+              <div key={c.id} onClick={() => setSelectedCardP2(c)}> 
+                <CardOnBoard key={c.id} card={c}></CardOnBoard>
+              </div>
+                ))
+            }
+            <div style={{marginLeft: 20, border:"1px solid red"}}>
+              <CardOnBoard card={selectedCardP2}></CardOnBoard>
+            </div>
+            </Box>
+        </Grid>
+      </Grid>
+      
     </div>
   );
   
