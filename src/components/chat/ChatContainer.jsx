@@ -1,7 +1,7 @@
 import { ChatItem } from "./ChatItem";
 import { socket } from "../../socket";
 import { useEffect } from "react";
-import { TextField, Box, Button, Grid } from "@mui/material";
+import { TextField, Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getChatHistory, getReceiverId, getUserId} from "../../core/selectors";
 import { loadChatHistory, updateChatHistory } from "../../core/actions";
