@@ -15,7 +15,7 @@ import {userAuthentication} from '../core/actions';
 import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {useState} from "react";
-import { LOCALLINK, BACKLINK, AUTH } from '../constants';
+import { LOCALLINK, PROXYLINK, AUTH } from '../constants';
 
 const defaultTheme = createTheme();
 
@@ -33,8 +33,8 @@ export function Login(props) {
   async function authenticationRequest(data) {
     console.log(data)
     try {
-
-      const response = await fetch(`${BACKLINK}/${AUTH}/auth`, {
+m
+      const response = await fetch(`${PROXYLINK}/${AUTH}/auth`, {
         method: 'POST', // ou 'POST', 'PUT', etc.
         headers: {
           'Content-Type': 'application/json',

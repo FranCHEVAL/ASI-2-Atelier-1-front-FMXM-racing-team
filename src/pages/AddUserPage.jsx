@@ -12,7 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/common/Copyright';
 import { useNavigate } from 'react-router-dom';
 import {useSelector} from "react-redux";
-import { LOCALLINK, BACKLINK, USER } from '../constants';
+import { LOCALLINK, PROXYLINK, USER } from '../constants';
 
 
 const defaultTheme = createTheme();
@@ -30,7 +30,7 @@ export function AddUserPage(props) {
   // TO DO : Puth this function in a separate file which handle request
   async function addUserRequest(data) {
     try {
-      const response = await fetch(`${BACKLINK}/${USER}/user`, {
+      const response = await fetch(`${PROXYLINK}/${USER}/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
