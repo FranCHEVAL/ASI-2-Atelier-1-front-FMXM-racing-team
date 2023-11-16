@@ -36,8 +36,7 @@ export function Login(props) {
       const response = await fetch(`${PROXYLINK}/${AUTH}/auth`, {
         method: 'POST', // ou 'POST', 'PUT', etc.
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': LOCALLINK
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(data),
       })
