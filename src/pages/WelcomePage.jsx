@@ -6,11 +6,8 @@ import ChatIcon from '@mui/icons-material/Chat';
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
-<<<<<<< HEAD
 import { LOCALLINK } from "../constants.js"
-=======
 import { SocketManager } from "../socket";
->>>>>>> e06b39f ([WIP] raccordement socket)
 
 export function WelcomePage(){
     const userId = useSelector(state => state.currentUserId);
