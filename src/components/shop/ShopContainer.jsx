@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import * as React from 'react';
 import CardTable from "./CardTable";
 import { loadCards } from "../../core/actions";
@@ -57,9 +57,7 @@ const ShopContainer = (props) => {
         );
         const result = await resp.json();
         dispatch(loadCards(result));
-      }
-
-     
+      } 
     }
     fetchData();
   }, [dispatch]);
