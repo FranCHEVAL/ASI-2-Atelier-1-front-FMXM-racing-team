@@ -5,6 +5,7 @@ import { AttachMoney } from "@mui/icons-material";
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
+import { LOCALLINK } from "../constants.js"
 
 export function WelcomePage(){
     const userId = useSelector(state => state.currentUserId);
@@ -22,21 +23,21 @@ export function WelcomePage(){
                     <Grid item xs={6}>
                         <MenuCard
                         text="BUY"
-                        link="http://localhost:3000/buy"
+                        link={`${LOCALLINK}/buy`}
                         icon={<ShoppingCart />}
                         ></MenuCard>
                     </Grid>
                     <Grid item xs={6}>
                         <MenuCard
                             text="Play"
-                            link="http://localhost:3000/play"
+                            link={`${LOCALLINK}/play`}
                             icon={<SportsEsports />}
                         ></MenuCard>
                     </Grid>
                     <Grid item xs={6}>
                         <MenuCard
                         text="Sell"
-                        link="http://localhost:3000/sell"
+                        link={`${LOCALLINK}/sell`}
                         icon={<AttachMoney />}
                     ></MenuCard>
                     </Grid>

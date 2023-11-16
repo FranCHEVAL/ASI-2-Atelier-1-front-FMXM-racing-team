@@ -1,5 +1,6 @@
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import { LOCALLINK } from '../../constants';
 
 export function Copyright(props){
     const getFullYear =() =>{
@@ -9,7 +10,7 @@ export function Copyright(props){
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="http://localhost:3000">
+            <Link color="inherit" href={`${LOCALLINK}`}>
                 FMXM racing team website
             </Link>
             {getFullYear()}

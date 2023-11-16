@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../components/common/Copyright';
 import { useNavigate } from 'react-router-dom';
 import {useSelector} from "react-redux";
+import { LOCALLINK, BACKLINK, USER } from '../constants';
 
 
 const defaultTheme = createTheme();
@@ -29,7 +30,7 @@ export function AddUserPage(props) {
   // TO DO : Puth this function in a separate file which handle request
   async function addUserRequest(data) {
     try {
-      const response = await fetch("http://localhost:8080/user", {
+      const response = await fetch(`${BACKLINK}/${USER}/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -155,7 +156,7 @@ export function AddUserPage(props) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="http://localhost:3000/login" variant="body2">
+                <Link href={`${LOCALLINK}/login`} variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

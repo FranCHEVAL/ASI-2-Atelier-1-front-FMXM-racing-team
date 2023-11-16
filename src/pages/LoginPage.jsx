@@ -15,6 +15,7 @@ import {userAuthentication} from '../core/actions';
 import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {useState} from "react";
+import { LOCALLINK, BACKLINK, AUTH } from '../constants';
 
 const defaultTheme = createTheme();
 
@@ -33,11 +34,11 @@ export function Login(props) {
     console.log(data)
     try {
 
-      const response = await fetch("http://localhost:8085/auth", {
+      const response = await fetch(`${BACKLINK}/${AUTH}/auth`, {
         method: 'POST', // ou 'POST', 'PUT', etc.
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:3000'
+          'Access-Control-Allow-Origin': LOCALLINK
         },
         body: JSON.stringify(data),
       })
@@ -124,7 +125,7 @@ export function Login(props) {
             justifyContent="center"
             alignItems="center">
               <Grid item>
-                <Link href="http://localhost:3000/add-user" variant="body2">
+                <Link href={`${LOCALLINK}/add-user`} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

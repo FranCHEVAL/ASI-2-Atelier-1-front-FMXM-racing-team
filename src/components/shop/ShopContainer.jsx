@@ -10,6 +10,7 @@ import { selectCardDetail } from '../../core/selectors';
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import { BACKLINK, CARD, STORE } from "../../constants";
 
 const ShopContainer = (props) => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const ShopContainer = (props) => {
     const card_id = storedCardDetail?.id;
     const user_id = storedIdUser;
     if(props.mode ==="sell"){
-      const resp = await fetch("http://localhost:8081/store/sell", {
+      const resp = await fetch(`${BACKLINK}/${STORE}/store.sell`, {
         method: "POST",
         body: JSON.stringify({user_id: user_id, card_id: card_id}),
         headers: {
@@ -30,7 +31,7 @@ const ShopContainer = (props) => {
         },
       });
     }else{
-      const resp = await fetch("http://localhost:8081/store/buy", {
+      const resp = await fetch(`${BACKLINK}/${STORE}/store/buy`, {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -46,13 +47,13 @@ const ShopContainer = (props) => {
       // You can await here
       if(props.mode === "sell"){
         const resp = await fetch(
-          'http://localhost:8084/cards/user_id/' + storedIdUser
+          `${BACKLINK}/${CARD}/cards/user_id/` + storedIdUser
         );
         const result = await resp.json();
         dispatch(loadCards(result));
       }else{
         const resp = await fetch(
-          'http://localhost:8084/cards_to_sell'
+          `${BACKLINK}/${CARD}/cards_to_sell`
         );
         const result = await resp.json();
         dispatch(loadCards(result));
