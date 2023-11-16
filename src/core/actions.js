@@ -4,6 +4,11 @@ export const userAuthentication = (userId) => ({
   }
 );
 
+export const setGameInfos = (gameInfos) => ({
+  type: "UPDATE_GAME",
+  payload : gameInfos
+})
+
 export const userDisconnection = () => ({
   type: 'USER_DISCONNECTION',
   payload: null
@@ -18,4 +23,4 @@ export const selectCardDetail = (card) => ({
   type: 'LOAD_CARD_DETAIL',
   payload: card
 })
-  
+

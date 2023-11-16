@@ -21,6 +21,11 @@ const ShopContainer = (props) => {
     const user_id = storedIdUser;
     if(props.mode ==="sell"){
       await sellCard(card_id, user_id);
+      const cardsList = storedCards;
+      const filtered = cardsList.filter(c => c.id !== card_id);
+    
+      dispatch(loadCards(filtered));
+
     }else{
       await buyCard(card_id, user_id);
     }
@@ -32,6 +37,7 @@ const ShopContainer = (props) => {
       if(props.mode === "sell"){
         const cards = await getCardsToSell();
         dispatch(loadCards(cards));     
+
       }else{
         const cards = await getCards();      
         dispatch(loadCards(cards));     

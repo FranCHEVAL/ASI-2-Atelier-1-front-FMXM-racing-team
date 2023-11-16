@@ -1,12 +1,14 @@
 import { useEffect } from "react";
-import { getCards} from "../core/services/fetchService.js";
-import { loadCards } from "../core/actions.js";
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
-import { selectCards, getUserId } from '../core/selectors.js';
 import { DataGrid } from '@mui/x-data-grid';
-import { useNavigate } from 'react-router-dom';
+import { getCards} from "../core/services/fetchService.js";
+import { loadCards } from "../core/actions.js";
+import { selectCards, getUserId } from '../core/selectors.js';
+import { socket } from '../socket/socket.js';
+
 // ES6 import or TypeScript
 
 const columns = [
@@ -26,16 +28,21 @@ const columns = [
     
   ];
   
-const StartGamePage = (props) => {
+const StartGamePage = () => {
   const dispatch = useDispatch();
   const storedCards = useSelector(selectCards);
+  const storedIdUser = useSelector(getUserId);
+
   const cardIdList = [];
   const navigate = useNavigate();
 
-  async function handleClick(){
+  async function handleStartGameClick(){
     //Send event to websocket with cards
-    //socket.findGame(cardList, user_id)
-
+    console.log(cardIdList);
+    socket.connect();
+    socket.emit("findGame", storedIdUser, "francheval", cardIdList, (response) => {
+      console.log(response.game);
+    });
     navigate(`/game`, { state: {cardList: cardIdList}} ); //voir https://stackoverflow.com/questions/42173786/react-router-pass-data-when-navigating-programmatically
   }
 
@@ -82,7 +89,7 @@ const StartGamePage = (props) => {
                 pageSizeOptions={[5, 10]}
             />
         </div>
-        <Button variant="contained" onClick={() => {handleClick()}}>{"Start"}</Button>
+        <Button variant="contained" onClick={() => {handleStartGameClick()}}>{"Start"}</Button>
       
     </div>
   );
