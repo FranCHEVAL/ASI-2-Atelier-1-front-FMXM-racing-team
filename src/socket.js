@@ -3,4 +3,22 @@ import { PROXYLINK } from './constants';
 
 const URL = PROXYLINK;
   
-export const socket = io(URL);
+export class SocketManager{
+    constructor(){
+        this.socket = undefined
+    }
+
+    init(userId){
+        this.socket = io(URL,{
+            query:{
+                userId:userId
+            }
+        })
+    }
+
+    useSocket(){
+        return this.socket
+    }
+}
+
+export default new SocketManager()

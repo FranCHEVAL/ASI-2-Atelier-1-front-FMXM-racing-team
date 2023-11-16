@@ -6,11 +6,20 @@ import ChatIcon from '@mui/icons-material/Chat';
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
+<<<<<<< HEAD
 import { LOCALLINK } from "../constants.js"
+=======
+import { SocketManager } from "../socket";
+>>>>>>> e06b39f ([WIP] raccordement socket)
 
 export function WelcomePage(){
     const userId = useSelector(state => state.currentUserId);
     const navigate = useNavigate()
+    const socket = SocketManager.useSocket()
+
+    function joinRoom(){
+        socket.emit('join', userId)
+    }
 
     if(userId === null){
         navigate('/login')
@@ -44,6 +53,7 @@ export function WelcomePage(){
                     </Grid>
                     <Grid item xs={6}>
                         <MenuCard
+                        onClickAction={joinRoom()}
                         text="chat"
                         link={`${LOCALLINK}/chat`}
                         icon={<ChatIcon />}

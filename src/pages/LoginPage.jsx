@@ -16,6 +16,7 @@ import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {useState} from "react";
 import { LOCALLINK, PROXYLINK, AUTH } from '../constants';
+import { SocketManager } from '../socket';
 
 const defaultTheme = createTheme();
 
@@ -62,6 +63,7 @@ export function Login(props) {
     if(userId !== -1){
       navigate('/welcome-page')
       dispatch(userAuthentication(userId));
+      SocketManager.init(userId)
     } else {
         setErreurs(["Username or password incorrect"])
     }

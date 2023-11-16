@@ -1,11 +1,10 @@
 import { ChatItem } from "./ChatItem";
-import { socket } from "../../socket";
+import { SocketManager} from "../../socket";
 import { useEffect } from "react";
 import { TextField, Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getChatHistory, getReceiverId, getUserId} from "../../core/selectors";
 import { loadChatHistory, updateChatHistory } from "../../core/actions";
-
 
 export function ChatContainer(props){
 
@@ -13,6 +12,7 @@ export function ChatContainer(props){
     const userId = useSelector(getUserId)
     const dispatch = useDispatch()
     const chatHistory = useSelector(getChatHistory)
+    const socket = SocketManager.useSocket()
 
     async function handleSubmit(event){
         event.preventDefault();

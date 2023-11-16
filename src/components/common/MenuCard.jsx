@@ -5,8 +5,17 @@ import { CardActionArea } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export function MenuCard(props){
+
+    function clickActionIfPropsExist(){
+        if (typeof(props.onClickAction) === 'function'){
+            return props.onClickAction
+        }else{
+            
+        }
+    }
+
     return (
-        <Link to={props.link}>
+        <Link to={props.link} onClick={clickActionIfPropsExist()}>
             <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                 <CardContent>
