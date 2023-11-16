@@ -45,7 +45,7 @@ export function WelcomePage(){
                     <Grid item xs={6}>
                         <MenuCard
                         text="chat"
-                        link="http://localhost:3000/chat"
+                        link={`${LOCALLINK}//chat`}
                         icon={<ChatIcon />}
                     ></MenuCard>
                     </Grid>
