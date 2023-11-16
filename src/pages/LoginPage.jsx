@@ -33,7 +33,6 @@ export function Login(props) {
   async function authenticationRequest(data) {
     console.log(data)
     try {
-m
       const response = await fetch(`${PROXYLINK}/${AUTH}/auth`, {
         method: 'POST', // ou 'POST', 'PUT', etc.
         headers: {
