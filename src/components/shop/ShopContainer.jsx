@@ -22,7 +22,7 @@ const ShopContainer = (props) => {
     const card_id = storedCardDetail?.id;
     const user_id = storedIdUser;
     if(props.mode ==="sell"){
-      const resp = await fetch(`${BACKLINK}/${STORE}/store.sell`, {
+      const resp = await fetch(`${BACKLINK}/${STORE}/store/sell`, {
         method: "POST",
         body: JSON.stringify({user_id: user_id, card_id: card_id}),
         headers: {
