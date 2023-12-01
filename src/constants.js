@@ -4,4 +4,3 @@ export const AUTH = 'auth';
 export const CARD = 'card';
 export const STORE = 'store';
 export const USER = 'user';
-export const NODEJS = 'nodejs';

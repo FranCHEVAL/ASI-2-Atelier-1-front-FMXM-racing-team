@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
-import { PROXYLINK, NODEJS } from './constants';
+import { PROXYLINK } from './constants';
 
-const URL = PROXYLINK + "/" + NODEJS;
+const URL = PROXYLINK + "/";
   
 export const socket = io(URL);
