@@ -16,7 +16,7 @@ import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {useState} from "react";
 import { LOCALLINK, PROXYLINK, AUTH } from '../constants';
-import { SocketManager } from '../socket';
+import SocketManager from '../socket.js';
 
 const defaultTheme = createTheme();
 

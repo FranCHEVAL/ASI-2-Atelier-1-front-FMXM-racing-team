@@ -4,7 +4,7 @@ import { loadUsers, setReceiverId } from "../../core/actions";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { getUsersList} from "../../core/selectors";
 import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
-import { SocketManager } from "../../socket";
+import SocketManager from "../../socket.js";
 
 
 export function UserSelection(props){

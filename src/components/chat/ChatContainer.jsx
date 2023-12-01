@@ -1,5 +1,5 @@
 import { ChatItem } from "./ChatItem";
-import { SocketManager} from "../../socket";
+import SocketManager from "../../socket.js";
 import { useEffect } from "react";
 import { TextField, Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";

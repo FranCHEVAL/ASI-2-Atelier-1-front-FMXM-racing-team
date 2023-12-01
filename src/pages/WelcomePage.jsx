@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
 import { LOCALLINK } from "../constants.js"
-import { SocketManager } from "../socket";
+import SocketManager from "../socket.js";
 
 export function WelcomePage(){
     const userId = useSelector(state => state.currentUserId);

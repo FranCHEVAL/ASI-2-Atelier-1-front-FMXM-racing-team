@@ -3,8 +3,8 @@ import { PROXYLINK } from './constants';
 
 const URL = PROXYLINK;
   
-export class SocketManager{
-    constructor(){
+class SocketManager{
+    constructor({}){
         this.socket = undefined
     }
 
@@ -21,4 +21,4 @@ export class SocketManager{
     }
 }
 
-export default new SocketManager()
+export default new SocketManager({})

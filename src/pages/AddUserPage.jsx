@@ -37,9 +37,6 @@ export function AddUserPage(props) {
         },
         body: JSON.stringify(data),
       });
-  
-      const result = await response.json();
-      console.log(result);
     } catch (error) {
       console.error("Error:", error);
     }
