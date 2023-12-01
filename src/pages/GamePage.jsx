@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {useLocation} from 'react-router-dom';
 import { getCards } from "../core/services/fetchService.js";
@@ -17,13 +17,17 @@ const GamePage = () => {
   const cardList = location.state; // Read values passed on state
 
   const storedIdUser = useSelector(getUserId);
-  const storedGameInfos = useSelector(selectGameInfos);
+  //const stateGameInfos = useSelector(selectGameInfos);
+  const [stateGameInfos, setStateGameInfos] = useState();
 
   const [selectedCardP1, setSelectedCardP1] = useState(0);
   const [selectedCardP2, setSelectedCardP2] = useState(0);
    
   const [isStarted, setIsStarted] = useState();
   const [playerTurn, setPlayerTurn] = useState();
+
+  const stateRef = useRef();
+  stateRef.current =  stateGameInfos;
   //store : 
 
   const storedCards = useSelector(selectCards);
@@ -31,8 +35,11 @@ const GamePage = () => {
   //Listeners
   function startGame(gameInfos){
     console.log("startGame-event" + gameInfos);
+    
+    setStateGameInfos(gameInfos);
+
     setIsStarted(true);
-    dispatch(setGameInfos(gameInfos));     
+
 
   }
 
@@ -43,12 +50,6 @@ const GamePage = () => {
 
   }
 
-  function updatePlayer(value){
-    const gameInfos = storedGameInfos;
-    //gameInfos.players.find(p => p.id === value.targetPlayer.id);
-    console.log("updatePlayer-event" + value);
-
-  }
 
   function beginTurn(userId){
     console.log("beginTurn-event" + userId);
@@ -70,43 +71,74 @@ const GamePage = () => {
       alert("Not your turn bro :(");
       return;
     }
-    if(storedGameInfos.players.find(g => g.id === storedIdUser).action <= 0){
+    if(stateGameInfos.players.find(g => g.id === storedIdUser).action <= 0){
       alert("Plus de points d'actions");
       return;
     }
     socket.emit("playerAttack", 
-      storedGameInfos.id, 
+      stateGameInfos.id, 
       storedIdUser, 
       selectedCardP1.id,
-      storedGameInfos.players.find(g => g.id !== storedIdUser).id, 
-      selectedCardP2.id, (response) => {
+      stateGameInfos.players.find(g => g.id !== storedIdUser).id, 
+      selectedCardP2.id, 
+      (response) => {
         console.log(response);
       });
 
 
   }
 
+  function endTurnClick(){
+    if(!playerTurn){
+      alert("Not your turn bro :(");
+      return;
+    }
+    socket.emit("endTurn", 
+      stateGameInfos.id, 
+      storedIdUser,
+      (response) => {
+        console.log(response);}
+      );
+  }
+    
+  
+
   useEffect(() => {
 
+    const updatePlayerCallback = (value) => {
+      const gameInfos = stateRef.current;
+      const newPlayers = [value.player, value.targetPlayer];
+
+      gameInfos.players = newPlayers;
+
+      setStateGameInfos(gameInfos);
+    }  
+
+    function updatePlayer(value){
+      const test = this;
+      const gameInfos = stateGameInfos;
+      //gameInfos.players.find(p => p.id === value.targetPlayer.id);
+      setStateGameInfos(value);
+  
+      console.log("updatePlayer-event" + value);
+  
+    }
+  
     socket.connect();
     socket.on('startGame', startGame);
     socket.on('attack', attack);
-    socket.on('updatePlayer',(value) => console.log(storedGameInfos));
-    socket.on('beginTurn', beginTurn);
-    //get CardSelected
-    async function fetchData() {
-      const cards = await getCards();      
-      dispatch(loadCards(cards));     
-    }
-    
-    fetchData();
+    //socket.on('updatePlayer', updatePlayer);
+    socket.on('updatePlayer', updatePlayerCallback);
+    socket.on('beginTurn', beginTurn);  
+
+  
 
     return () => {
       socket.off('startGame', startGame);
       socket.off('findGame', ()=>{});
       socket.off('attack', attack);
-      socket.off('updatePlayer', updatePlayer);
       socket.off('beginTurn', beginTurn);
+      socket.off('updatePlayer', updatePlayerCallback);
       //get CardSelected
     }
   }, [dispatch]);
@@ -117,10 +149,10 @@ const GamePage = () => {
     <div>
       <Grid container spacing={2}>
         <Grid item xs={2}>
-          {storedGameInfos.players !== undefined ?
+          {stateGameInfos.players !== undefined ?
             <PlayerInfos 
             playerName="Vous"
-            playerActionPoints={storedGameInfos.players.find(g => g.id === storedIdUser).action}
+            playerActionPoints={stateGameInfos.players.find(g => g.id === storedIdUser).action}
           ></PlayerInfos>
           :
           <></>
@@ -129,8 +161,8 @@ const GamePage = () => {
         </Grid>
         <Grid item xs>
           <Box display="flex">
-            {storedGameInfos.players !== undefined ? 
-            Object.values(storedGameInfos.players.find(g => g.id === storedIdUser).deck).map((c) => ( //tri sur 
+            {stateGameInfos.players !== undefined ? 
+            Object.values(stateGameInfos.players.find(g => g.id === storedIdUser).deck).map((c) => ( //tri sur 
               <div key={c.id} onClick={() => setSelectedCardP1(c)}> 
                 <CardOnBoard key={c.id} card={c}></CardOnBoard>
               </div>
@@ -147,13 +179,13 @@ const GamePage = () => {
       </Grid>
       <hr/>
       <Button onClick={()=>{attackClick()}} variant="contained" color="error">Attack !</Button>
-      <Button variant="contained">End Turn</Button>
+      <Button onClick={()=>{endTurnClick()}} variant="contained">End Turn</Button>
       <Grid container spacing={2}>
         <Grid item xs={2}>
-          {storedGameInfos.players !== undefined ?
+          {stateGameInfos.players !== undefined ?
             <PlayerInfos 
-            playerName={storedGameInfos.players.find(g => g.id !== storedIdUser).name}
-            playerActionPoints={storedGameInfos.players.find(g => g.id !== storedIdUser).action}
+            playerName={stateGameInfos.players.find(g => g.id !== storedIdUser).name}
+            playerActionPoints={stateGameInfos.players.find(g => g.id !== storedIdUser).action}
           ></PlayerInfos>   
         :
         <></>
@@ -162,8 +194,8 @@ const GamePage = () => {
         </Grid>
         <Grid item xs>
           <Box display="flex">
-          {storedGameInfos.players !== undefined ? 
-            Object.values(storedGameInfos.players.find(g => g.id !== storedIdUser).deck).map((c) => ( //tri sur 
+          {stateGameInfos.players !== undefined ? 
+            Object.values(stateGameInfos.players.find(g => g.id !== storedIdUser).deck).map((c) => ( //tri sur 
               <div key={c.id} onClick={() => setSelectedCardP2(c)}> 
                 <CardOnBoard key={c.id} card={c}></CardOnBoard>
               </div>
