@@ -77,6 +77,7 @@ const ShopContainer = (props) => {
 
   return (
     <div>
+      <h1>{props.mode === "sell" ? "Vendre des cartes" : "Acheter des cartes"} </h1>
       <Container style={{padding: '30px'}}>
         <Grid container spacing={2}>
           <Grid item xs={12}>

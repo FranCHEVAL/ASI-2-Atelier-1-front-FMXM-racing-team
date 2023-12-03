@@ -7,7 +7,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { getCards} from "../core/services/fetchService.js";
 import { loadCards } from "../core/actions.js";
 import { selectCards, getUserId } from '../core/selectors.js';
-import { socket } from '../socket/socket.js';
+import SocketManager from "../socket";
 
 // ES6 import or TypeScript
 
@@ -35,6 +35,8 @@ const StartGamePage = () => {
 
   const cardIdList = [];
   const navigate = useNavigate();
+
+  const socket = SocketManager.useSocket()
 
   async function handleStartGameClick(){
     //Send event to websocket with cards
@@ -74,6 +76,7 @@ const StartGamePage = () => {
 
   return (
     <div>
+        <h1>Choisissez vos carte pour commencer la partie</h1>
         <p>Liste des cartes</p>
         <div style={{ height: 400, width: '60%' }}>
             <DataGrid
