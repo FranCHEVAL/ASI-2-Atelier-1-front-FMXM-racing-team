@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useEffect } from "react";
 import { getCards, getCardsToSell, sellCard, buyCard } from "../../core/services/fetchService.js";
 import { loadCards } from "../../core/actions";
 import * as React from 'react';
@@ -73,9 +72,7 @@ const ShopContainer = (props) => {
         const cards = await getCards();      
         dispatch(loadCards(cards));     
       }
-    }
-    fetchData();
-  }, [dispatch]);
+    });
 
 
   return (

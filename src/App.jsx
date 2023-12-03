@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { isConnected } from './core/selectors';
 import ShopContainer from './components/shop/ShopContainer';
 import GamePage from './pages/GamePage';
+import {Chat} from "@mui/icons-material";
 
 function App() {
   const isAuthenticated = useSelector(isConnected);
@@ -52,7 +53,6 @@ function App() {
                 <Chat/>
               </ProtectedRoute>
             } />
-          </Route>
         </Routes>
       </BrowserRouter>
     </div>
