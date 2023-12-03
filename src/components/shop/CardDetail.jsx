@@ -18,8 +18,6 @@ export function CardDetail() {
                 title="test"
                 type="image"
                 />
-
-
         </Card>
     );
 }

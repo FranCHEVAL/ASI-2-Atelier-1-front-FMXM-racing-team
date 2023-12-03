@@ -1,7 +1,9 @@
 import { useEffect } from "react";
+import { useEffect } from "react";
+import { getCards, getCardsToSell, sellCard, buyCard } from "../../core/services/fetchService.js";
+import { loadCards } from "../../core/actions";
 import * as React from 'react';
 import CardTable from "./CardTable";
-import { loadCards } from "../../core/actions";
 import { getUserId, selectCards } from '../../core/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { CardDetail } from "./CardDetail";
@@ -30,6 +32,12 @@ const ShopContainer = (props) => {
           'Content-Type': 'application/json'
         },
       });
+      await sellCard(card_id, user_id);
+      const cardsList = storedCards;
+      const filtered = cardsList.filter(c => c.id !== card_id);
+    
+      dispatch(loadCards(filtered));
+
     }else{
       const resp = await fetch(`${PROXYLINK}/${STORE}/store/buy`, {
         method: "POST",
@@ -39,6 +47,7 @@ const ShopContainer = (props) => {
         },
         body: JSON.stringify({user_id: user_id, card_id: card_id})
       });
+      await buyCard(card_id, user_id);
     }
   }
 
@@ -51,6 +60,9 @@ const ShopContainer = (props) => {
         );
         const result = await resp.json();
         dispatch(loadCards(result));
+        const cards = await getCardsToSell();
+        dispatch(loadCards(cards));     
+
       }else{
         const resp = await fetch(
           `${PROXYLINK}/${CARD}/cards_to_sell`
@@ -58,6 +70,9 @@ const ShopContainer = (props) => {
         const result = await resp.json();
         dispatch(loadCards(result));
       } 
+        const cards = await getCards();      
+        dispatch(loadCards(cards));     
+      }
     }
     fetchData();
   }, [dispatch]);
