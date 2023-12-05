@@ -2,29 +2,27 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loadUsers, setReceiverId } from "../../core/actions";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { getUsersList} from "../../core/selectors";
+import { getUsers } from "../../core/services/fetchService.js";
 import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import { getUsersList } from "../../core/selectors.js";
 import SocketManager from "../../socket.js";
 
 
 export function UserSelection(props){
     const dispatch = useDispatch();
+    const userId = useSelector(state => state.currentUserId);
     const usersList = useSelector(getUsersList)
     const socket = SocketManager.useSocket()
 
     useEffect(() => {
-      function onLoadOnlineUsers(users){
-        dispatch(loadUsers(users));
+      async function fetchData() {
+        const result = await getUsers();
+        dispatch(loadUsers(result));      
       }
-      socket.on('onLoadOnlineUsers',onLoadOnlineUsers);
-
-      return () => {
-        socket.on('onLoadOnlineUsers',onLoadOnlineUsers);
-      }
+      fetchData();
     }, [dispatch]);
 
     const onSelectUser = (event) => {
-      // TO DO : check if we have to move it to chat component
       const receiverId = event.target.value
       socket.emit("askChatHistory",receiverId)
       dispatch(setReceiverId(receiverId))

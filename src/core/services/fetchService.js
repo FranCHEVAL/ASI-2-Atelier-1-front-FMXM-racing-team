@@ -1,4 +1,4 @@
-import { PROXYLINK, CARD, STORE } from "../../constants.js";
+import { PROXYLINK, CARD, STORE,USER } from "../../constants.js";
 
 export async function buyCard(card_id, user_id){
     await fetch(`${PROXYLINK}/${STORE}/store/buy`, {
@@ -43,6 +43,14 @@ export async function getUserCards(user_id){
 
     const resp = await fetch(
         `${PROXYLINK}/${CARD}/cards/user_id/` + user_id
+      );
+        return await resp.json();
+}
+
+export async function getUsers(){
+
+    const resp = await fetch(
+        `${PROXYLINK}/${USER}/users`
       );
         return await resp.json();
 } 
